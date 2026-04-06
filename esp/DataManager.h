@@ -18,6 +18,7 @@ private:
   std::vector<LogEntry> history;
   String adminPass;
   String accessCode;
+  bool pendingUnlock;
   
 public:
   DataManager();
@@ -35,6 +36,12 @@ public:
   String getAccessCode() const;
   std::vector<String> getAuthorizedBadges() const;
   std::vector<LogEntry> getHistory() const;
+  
+  // New Methods for syncing
+  void clearHistory();
+  void setAuthorizedBadges(const std::vector<String>& badges);
+  bool hasPendingRemoteUnlock() const;
+  void setPendingRemoteUnlock(bool pending);
 };
 
 #endif

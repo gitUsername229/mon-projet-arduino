@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id       Int          @id @default(autoincrement())
+  login    String       @unique
+  password String
+  role     String       @default("USER") // "ADMIN" or "USER"
+  lockers  UserLocker[]
+}
+
+model Locker {
+  id         Int               @id @default(autoincrement())
+  name       String            @default("Casier Principal")
+  keypadCode String            @default("123456")
+  espIp      String?
+  espMac     String?           @unique
+  users      UserLocker[]
+  badges     AuthorizedBadge[]
+  logs       Log[]
+}
+
+model UserLocker {
+  userId   Int
+  lockerId Int
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  locker   Locker @relation(fields: [lockerId], references: [id], onDelete: Cascade)
+
+  @@id([userId, lockerId])
+}
+
+model AuthorizedBadge {
+  id       Int    @id @default(autoincrement())
+  uid      String
+  name     String?
+  lockerId Int
+  locker   Locker @relation(fields: [lockerId], references: [id], onDelete: Cascade)
+
+  @@unique([uid, lockerId])
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  uid       String
+  success   Boolean
+  timestamp DateTime @default(now())
+  lockerId  Int
+  locker    Locker   @relation(fields: [lockerId], references: [id], onDelete: Cascade)
+}

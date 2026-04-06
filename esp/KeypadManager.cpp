@@ -1,6 +1,5 @@
 #include "KeypadManager.h"
 
-const String CONFIG_CODE = "9999";
 
 KeypadManager::KeypadManager(HardwareSerial& serial) : inputBuffer(""), keypadSerial(serial) {}
 
@@ -41,9 +40,6 @@ void KeypadManager::addKey(char key) {
   inputBuffer += key;
 }
 
-bool KeypadManager::checkConfigCode() {
-  return inputBuffer == CONFIG_CODE;
-}
 
 bool KeypadManager::checkAccessCode(String accessCode) {
   return inputBuffer == accessCode;
@@ -69,14 +65,9 @@ KeypadResult KeypadManager::handleKeypad() {
       String buffer = getBuffer();
       
       if (buffer.length() > 0) {
-        if (checkConfigCode()) {
-          clear();
-          return KEYPAD_CONFIG_CODE;
-        } else {
-          lastAccessCode = buffer;
-          clear();
-          return KEYPAD_ACCESS_CODE;
-        }
+        lastAccessCode = buffer;
+        clear();
+        return KEYPAD_ACCESS_CODE;
       } else {
         clear();
         return KEYPAD_NO_KEY;

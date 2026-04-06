@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecureSafe - Gestion Mot de passe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="dark-theme">
+    <div id="bg-decoration">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <header class="navbar glass-panel fade-in">
+        <h1 class="brand cursor-pointer" onclick="window.location.href='/'">SecureSafe</h1>
+        <div class="flex items-center gap-4">
+            <div class="profile-menu" id="profile-menu">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="document.getElementById('profile-menu').classList.toggle('open')">
+                    <span class="font-semibold text-gradient" id="nav-username"></span>
+                    <span>▼</span>
+                </div>
+                <div class="profile-dropdown">
+                    <button class="dropdown-item" onclick="window.location.href='/profile.html'">Gestion mot de passe</button>
+                    <button class="dropdown-item" id="nav-btn-register" onclick="window.location.href='/register.html'">Créer un compte</button>
+                    <hr style="border-color: var(--border-color); margin: 0.25rem 0;" />
+                    <button class="dropdown-item" style="color: var(--danger)" onclick="window.logout()">Déconnexion</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex flex-col min-h-screen items-center justify-center fade-in">
+        <div class="glass-panel login-container w-full" style="max-width: 500px">
+            <h2 class="text-3xl mb-6 text-center">Modifier le mot de passe</h2>
+            <div class="form-group mb-6">
+                <label class="input-label">Nouveau mot de passe</label>
+                <input type="password" id="profilePwd" class="input" required>
+            </div>
+            <button class="btn btn-primary w-full" id="btnUpdatePwd">Mettre à jour</button>
+        </div>
+    </main>
+
+    <script type="module" src="/profile.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 #include "DataManager.h"
 
-DataManager::DataManager() : adminPass("1234"), accessCode("0000") {}
+DataManager::DataManager() : adminPass("1234"), accessCode("0000"), pendingUnlock(false) {}
 
 void DataManager::begin() {
   prefs.begin("casier", false);
@@ -34,7 +34,7 @@ void DataManager::saveBadges() {
 }
 
 void DataManager::addLog(String uid, bool success) {
-  if (history.size() >= 20) {
+  if (history.size() >= 50) {
     history.erase(history.begin());
   }
   history.push_back({uid, success, millis()});
@@ -65,11 +65,6 @@ void DataManager::updatePassword(String newPwd) {
   prefs.putString("pwd", adminPass);
 }
 
-void DataManager::updateAccessCode(String newCode) {
-  accessCode = newCode;
-  prefs.putString("accessCode", accessCode);
-}
-
 String DataManager::getAdminPass() const {
   return adminPass;
 }
@@ -84,4 +79,26 @@ std::vector<String> DataManager::getAuthorizedBadges() const {
 
 std::vector<LogEntry> DataManager::getHistory() const {
   return history;
+}
+
+void DataManager::updateAccessCode(String code) {
+    accessCode = code;
+    prefs.putString("accessCode", accessCode);
+}
+
+void DataManager::clearHistory() {
+    history.clear();
+}
+
+void DataManager::setAuthorizedBadges(const std::vector<String>& badges) {
+    authorizedBadges = badges;
+    saveBadges();
+}
+
+bool DataManager::hasPendingRemoteUnlock() const {
+    return pendingUnlock;
+}
+
+void DataManager::setPendingRemoteUnlock(bool pending) {
+    pendingUnlock = pending;
 }

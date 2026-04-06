@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecureSafe - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="dark-theme">
+    <div id="bg-decoration">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <header class="navbar glass-panel fade-in">
+        <h1 class="brand cursor-pointer" onclick="window.location.href='/'">SecureSafe</h1>
+        <div class="flex items-center gap-4">
+            <div class="profile-menu" id="profile-menu">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="document.getElementById('profile-menu').classList.toggle('open')">
+                    <span class="font-semibold text-gradient" id="nav-username"></span>
+                    <span>▼</span>
+                </div>
+                <div class="profile-dropdown">
+                    <button class="dropdown-item" onclick="window.location.href='/profile.html'">Gestion mot de passe</button>
+                    <button class="dropdown-item" id="nav-btn-register" onclick="window.location.href='/register.html'">Créer un compte</button>
+                    <hr style="border-color: var(--border-color); margin: 0.25rem 0;" />
+                    <button class="dropdown-item" style="color: var(--danger)" onclick="window.logout()">Déconnexion</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex flex-col min-h-screen">
+        <div class="fade-in" style="padding: 2rem;">
+            <h2 class="text-2xl mb-6">Casiers Connectés</h2>
+            <div id="dashboardFeedback" class="text-center text-muted mb-4">Recherche des casiers...</div>
+            <div id="dashboardLockers" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </main>
+
+    <script type="module" src="/dashboard.js"></script>
+</body>
+</html>
